@@ -1,0 +1,58 @@
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f8f8;
+    color: #333;
+    text-align: center;
+}
+
+/* Header styles */
+header {
+    background-image: url("../images/blue-tile.jpg");
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    color: #fff;
+    margin: 0;
+    font-size: 36px;
+}
+
+header a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 18px;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+header a:hover {
+    color: #f4d03f;
+}
+
+/* Content styles */
+h1 {
+    color: #d35400;
+    font-size: 42px;
+    margin-top: 40px;
+}
+
+p {
+    font-size: 20px;
+    max-width: 600px;
+    margin: 20px auto;
+    line-height: 1.6;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    header a {
+        display: block;
+        margin: 10px 0;
+    }
+}
