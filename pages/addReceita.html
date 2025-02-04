@@ -5,6 +5,8 @@
         <title>Dona Dalva Receitas</title>
         <meta title="author" name="Felipe Garcia Affonso">
         <link rel="stylesheet" href="../style/index.css">
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
     </head>
     <body>
         <header>
@@ -14,14 +16,16 @@
             <a href="memorias.html">memorias</a>
         </header>
 
-        <div id="memory-form">
+        <div id="receita-form">
             <input type="text" id="title" placeholder="Titulo da receita" required>
             <textarea id="ingridents" placeholder="Ingredientes" required></textarea>
             <textarea id="howto" placeholder="Como Fazer" required></textarea>
             <textarea id="historia relacionada" placeholder="Historia Relacionada"></textarea>
             <input type="file" id="image" accept="image/*">
-            <button type="submit">Postar</button>
+            <button type="submit" id="submit">Postar</button>
         </div>
+
+        <script src="../scr/addReceita.js" type="module"></script>
 
     </body>
 </html>
