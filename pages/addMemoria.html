@@ -6,11 +6,9 @@
         <meta title="author" name="Felipe Garcia Affonso">
         <link rel="stylesheet" href="../style/index.css">
         
-        <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-storage.js"></script>
-        <script href="../scr/index.js"></script>
-    </head>
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+       </head>
     <body>
         <header>
             <h1>Dona Dalva</h1>
@@ -19,11 +17,13 @@
             <a href="memorias.html">memorias</a>
         </header>
 
-        <div id="memory-form">
-            <input type="text" id="title" placeholder="Titulo da memoria" required>
-            <textarea id="text" placeholder="Conte sua historia..." required></textarea>
-            <input type="file" id="image" accept="image/*">
-            <button type="submit">Postar</button>
+        <div id="memory-form-container">
+                <input type="text" id="title" placeholder="Titulo da memoria">
+                <textarea id="text" placeholder="Conte sua historia..."></textarea>
+                <input type="file" id="image" accept="image/*">
+                <button type="submit" id="submit">Postar</button> <!-- ✅ Keep type="submit" -->
         </div>
+
+        <script src="../scr/addMemoria.js" type="module"></script>
     </body>
 </html>
