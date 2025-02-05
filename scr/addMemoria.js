@@ -39,8 +39,12 @@ async function addMemory() {
     // 📤 Upload Image if provided
     if (imageFile) {
       const storageRef = storage.ref(`memorias/${Date.now()}_${imageFile.name}`);
+
+      // ✅ Upload the file using uploadBytes
       const snapshot = await storageRef.put(imageFile);
-      imageURL = await snapshot.ref.getDownloadURL();
+
+      // 🔗 Get the download URL after successful upload
+      //imageURL = await snapshot.ref.getDownloadURL();
     }
 
     // 🔥 Add memory to Firestore
@@ -48,7 +52,7 @@ async function addMemory() {
       titulo,
       autor,
       texto,
-      imageURL,
+      imageURL, // ✅ Save the image URL in Firestore
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     });
 
