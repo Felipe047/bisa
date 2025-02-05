@@ -1,0 +1,86 @@
+/* Card Container for Each Receita */
+#receitas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+.receita-card {
+    background-color: #fff;
+    border: 1px solid #000;
+    padding: 16px;
+    margin: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-align: center; /* Center all text inside the card */
+    width: 350px;
+  }
+  
+  /* Hover effect for better interactivity */
+  .receita-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Receita Title: Bold */
+  .receita-title {
+    font-weight: bold;
+    font-size: 1.5em;
+    margin: 0 0 8px;
+  }
+  
+  /* Receita Author: Smaller, Gray Text */
+  .receita-author {
+    text-align: center;
+    font-size: 0.9em;
+    color: gray;
+    margin: 0 0 8px;
+  }
+  
+  /* Receita Image: Center and ensure proper sizing */
+  .receita-image {
+    width: 100%;
+    max-width: 200px;
+    display: block;
+    margin: 8px auto;
+  }
+  
+  /* Receita Link: Styled as button */
+  .receita-link {
+    color: blue;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 8px 0;
+  }
+  
+  .receita-link:hover {
+    text-decoration: underline;
+  }
+  
+  /* Style for the "Adicionar Receita" button */
+  .add-receita-button {
+    display: inline-block;
+    background-color: #2781AA;
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin-bottom: 20px;
+  }
+  
+  .add-receita-button:hover {
+    background-color: white;
+    color: black;
+    border: 1px solid #2781AA;
+  }
+
+  /* Remove hyperlink styling from the entire clickable card */
+  .receita-container {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  

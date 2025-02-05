@@ -18,7 +18,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 // DOM Element for displaying recipes
-const receitasDiv = document.getElementById("divReceitas");
+const receitasDiv = document.getElementById("receitas");
 
 // Fetch and display recipes from Firestore
 async function fetchReceitas() {
@@ -29,13 +29,16 @@ async function fetchReceitas() {
     querySnapshot.forEach((doc) => {
       const receita = doc.data();
       const receitaDiv = document.createElement("div");
+      receitaDiv.classList.add("receita-card");
 
       receitaDiv.innerHTML = `
-        <h2>${receita.titulo}</h2>
-        ${receita.autor ? `<p><strong>Autor:</strong> ${receita.autor}</p>` : ""}
-        ${receita.imageURL ? `<img src="${receita.imageURL}" alt="${receita.titulo}" style="max-width: 200px;">` : ""}
-        <p><strong>Ingredientes:</strong> ${receita.ingredientes}</p>
-        <a href="receita.html?id=${doc.id}">Ver Receita Completa</a>
+        <a class="receita-container" href="receita.html?id=${doc.id}">
+          <h2 class="receita-title">${receita.titulo}</h2>
+          ${receita.autor ? `<p class="receita-author">${receita.autor}</p>` : ""}
+          ${receita.imageURL ? `<img class="receita-image" src="${receita.imageURL}" alt="${receita.titulo}">` : ""}
+          <p class="receita-text">${receita.descricao ? receita.descricao.substring(0, 150) + "..." : ""}</p>
+          <p class="receita-link">Ver Receita Completa</p>
+        </a>
       `;
 
       receitasDiv.appendChild(receitaDiv);

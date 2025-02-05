@@ -28,13 +28,16 @@ async function fetchMemories() {
     querySnapshot.forEach((doc) => {
       const memory = doc.data();
       const memoryDiv = document.createElement("div");
+      memoryDiv.classList.add("memory-card");
 
       memoryDiv.innerHTML = `
-        <h2>${memory.titulo}</h2>
-        ${memory.autor ? `<p><strong>Autor:</strong> ${memory.autor}</p>` : ""}
-        ${memory.imageURL ? `<img src="${memory.imageURL}" alt="${memory.titulo}" style="max-width: 200px;">` : ""}
-        <p>${memory.texto ? memory.texto.substring(0, 150) + "..." : ""}</p>
-        <a href="memoria.html?id=${doc.id}">Read More</a>
+        <a class="memory-container" href="memoria.html?id=${doc.id}">
+          <h2 class="memory-title">${memory.titulo}</h2>
+          ${memory.autor ? `<p class="memory-author">${memory.autor}</p>` : ""}
+          ${memory.imageURL ? `<img class="memory-image" src="${memory.imageURL}" alt="${memory.titulo}">` : ""}
+          <p class="memory-text">${memory.texto ? memory.texto.substring(0, 150) + "..." : ""}</p>
+          <p class="memory-link">Read More</p>
+        </a>
       `;
 
       memoriesDiv.appendChild(memoryDiv);

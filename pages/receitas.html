@@ -4,9 +4,7 @@
     <title>Dona Dalva Receitas</title>
     <meta title="author" name="Felipe Garcia Affonso">
     <link rel="stylesheet" href="../style/index.css">
-    <!-- Optionally, include page-specific CSS -->
     <link rel="stylesheet" href="../style/receitas.css">
-    <!-- Note: With modular Firebase (v9) you can remove older Firebase script tags -->
   </head>
   <body>
     <header>
@@ -17,19 +15,18 @@
         <a href="memorias.html">Memórias</a>
       </nav>
     </header>
-    
+
     <main id="main-container">
       <h1>Receitas</h1>
-      <a href="addReceita.html">Adicionar Receita</a>
-      <div id="divReceitas"></div>
+      <a href="addReceita.html" class="add-receita-button">Adicionar Receita</a>
+      <div id="receitas" class="receitas-container"></div>
     </main>
-    
+
     <footer>
       <p>Em caso de erros ou dúvidas, contate: felipegarciaaffonso@gmail.com</p>
       <p>© 2025 Dona Dalva Memórias</p>
     </footer>
-    
-    <!-- Load receitas.js as a module -->
+
     <script src="../scr/receitas.js" type="module"></script>
   </body>
 </html>

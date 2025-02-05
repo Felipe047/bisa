@@ -1,35 +1,32 @@
 <!DOCTYPE html>
-
 <html>
-    <head>
-        <title>Dona Dalva Memorias</title>
-        <meta title="author" name="Felipe Garcia Affonso">
-        <link rel="stylesheet" href="../style/index.css">
-        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-    </head>
-    <body>
-        <header>
-            <h1>Dona Dalva</h1>
-            <nav>
-                <a href="../index.html">Página Inicial</a>
-                <a href="receitas.html">Receitas</a>
-                <a href="memorias.html">Memórias</a>
-            </nav>
-        </header>
+  <head>
+    <title>Dona Dalva Memórias</title>
+    <meta title="author" name="Felipe Garcia Affonso">
+    <link rel="stylesheet" href="../style/index.css">
+    <link rel="stylesheet" href="../style/memorias.css">
+  </head>
+  <body>
+    <header>
+      <h1>Dona Dalva</h1>
+      <nav>
+        <a href="../index.html">Página Inicial</a>
+        <a href="receitas.html">Receitas</a>
+        <a href="memorias.html">Memórias</a>
+      </nav>
+    </header>
 
-        <h1>Memorias</h1>
-        <a href="addMemoria.html">Adicionar Memoria</a>
+    <main id="main-container">
+      <h1>Memórias</h1>
+      <a class="add-memory-button" href="addMemoria.html">Adicionar Memória</a>
+      <div id="memorias"></div>
+    </main>
 
-        <div id="memorias"></div>
+    <footer>
+      <p>Em caso de erros ou dúvidas, contate: felipegarciaaffonso@gmail.com</p>
+      <p>© 2025 Dona Dalva Memórias</p>
+    </footer>
 
-        <br>
-
-        <footer>
-            <p>Em caso de erros ou duvidas contate: felipegarciaaffonso@gmail.com </p>
-            <p>© 2025 Dona Dalva Memórias</p>
-        </footer>
-
-        <script src="../scr/memorias.js" type="module" defer></script>
-    </body>
+    <script src="../scr/memorias.js" type="module" defer></script>
+  </body>
 </html>
