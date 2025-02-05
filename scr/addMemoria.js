@@ -40,7 +40,7 @@ async function addMemory() {
     if (imageFile) {
       const storageRef = storage.ref(`memorias/${Date.now()}_${imageFile.name}`);
 
-      // ✅ Upload the file using uploadBytes
+      // Use `put` instead of `uploadBytes`
       const snapshot = await storageRef.put(imageFile);
 
       // 🔗 Get the download URL after successful upload
