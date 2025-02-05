@@ -1,43 +1,59 @@
+/* Importing Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Italianno&family=Itim&display=swap');
+
 /* General styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Itim', cursive;
     margin: 0;
     padding: 0;
     background-color: #f8f8f8;
     color: #333;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 /* Header styles */
 header {
-    background-image: url("../images/blue-tile.jpg");
+    background-color: #CB8B82;
     padding: 20px;
-    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* Dona Dalva Title */
 header h1 {
+    font-family: 'Italianno', cursive;
     color: #fff;
     margin: 0;
-    font-size: 36px;
+    font-size: 48px;
+    text-align: left;
+    padding-left: 20px;
+}
+
+/* Navigation Links */
+nav {
+    display: flex;
+    gap: 20px;
+    padding-right: 20px;
 }
 
 header a {
     color: #fff;
-    text-decoration: none;
-    margin: 0 15px;
-    font-size: 18px;
-    font-weight: bold;
+    font-size: 20px;
     transition: color 0.3s;
 }
 
 header a:hover {
-    color: #f4d03f;
+    color: #2781AA;
 }
 
 /* Content styles */
 h1 {
-    color: #d35400;
+    font-family: 'Italianno', cursive;
     font-size: 42px;
     margin-top: 40px;
 }
@@ -49,10 +65,30 @@ p {
     line-height: 1.6;
 }
 
+/* Footer styles */
+footer {
+    background-image: url("../images/blue-tile.jpg");
+    padding: 20px;
+    color: #fff;
+    font-size: 16px;
+    text-align: center;
+
+    margin-top: auto;
+}
+
 /* Responsive styles */
 @media (max-width: 768px) {
-    header a {
-        display: block;
-        margin: 10px 0;
+    header {
+        flex-direction: column;
+    }
+
+    nav {
+        flex-direction: column;
+        gap: 10px;
+        padding: 0;
+    }
+
+    header h1 {
+        padding: 0;
     }
 }
