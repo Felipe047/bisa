@@ -1,18 +1,23 @@
+// Import Firebase v9 modules
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js";
+
 // Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyBg2BsiQ5uB8ULAgl9mvU0ilTJzT-oYFc0",
   authDomain: "bisa-8d6fb.firebaseapp.com",
   projectId: "bisa-8d6fb",
-  storageBucket: "bisa-8d6fb.appspot.com",
+  storageBucket: "gs://bisa-8d6fb.firebasestorage.app",
   messagingSenderId: "667766718405",
   appId: "1:667766718405:web:919e201256be887a3b55ac",
   measurementId: "G-JXMBFD0YMC"
 };
 
 // ✅ Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-const storage = firebase.storage(); // ✅ Firebase Storage
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app); // Initialize Firestore
+const storage = getStorage(app); // Initialize Storage
 
 // 🔗 DOM Elements
 const titleInput = document.getElementById("title");
@@ -38,22 +43,22 @@ async function addMemory() {
 
     // 📤 Upload Image if provided
     if (imageFile) {
-      const storageRef = storage.ref(`memorias/${Date.now()}_${imageFile.name}`);
+      const storageRef = ref(storage, `memorias/${Date.now()}_${imageFile.name}`);
 
-      // Use `put` instead of `uploadBytes`
-      const snapshot = await storageRef.put(imageFile);
+      // Use `uploadBytes` to upload the file
+      const snapshot = await uploadBytes(storageRef, imageFile);
 
       // 🔗 Get the download URL after successful upload
-      //imageURL = await snapshot.ref.getDownloadURL();
+      imageURL = await getDownloadURL(snapshot.ref);
     }
 
     // 🔥 Add memory to Firestore
-    await db.collection("memoria").add({
+    await addDoc(collection(db, "memoria"), {
       titulo,
       autor,
       texto,
       imageURL, // ✅ Save the image URL in Firestore
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      createdAt: serverTimestamp(), // Use serverTimestamp from Firebase v9
     });
 
     alert("Memória adicionada com sucesso!");
