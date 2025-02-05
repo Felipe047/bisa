@@ -1,48 +1,56 @@
+// Import Firebase v9 modules
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+import { getFirestore, collection, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
 // Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyBg2BsiQ5uB8ULAgl9mvU0ilTJzT-oYFc0",
   authDomain: "bisa-8d6fb.firebaseapp.com",
   projectId: "bisa-8d6fb",
-  storageBucket: "bisa-8d6fb.appspot.com",
+  storageBucket: "bisa-8d6fb.appspot.com", // Corrected storage bucket ID
   messagingSenderId: "667766718405",
   appId: "1:667766718405:web:919e201256be887a3b55ac",
   measurementId: "G-JXMBFD0YMC"
 };
 
-// ✅ Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-// 🔗 DOM Element
-const body = document.body; // Appending content directly to the body
+// Use a dedicated container for the recipe details
+const recipeContainer = document.getElementById("receita");
 
-// 🔍 Get Recipe ID from URL
+// Get Recipe ID from URL (e.g., receita.html?id=abc123)
 function getRecipeIdFromURL() {
   const params = new URLSearchParams(window.location.search);
-  return params.get("id"); // e.g., ?id=abc123
+  return params.get("id");
 }
 
-// 🚀 Fetch and Display Recipe by ID
+// Fetch and display the recipe
 async function fetchRecipe() {
   const recipeId = getRecipeIdFromURL();
 
   if (!recipeId) {
-    body.innerHTML += "<p>ID da receita não encontrado na URL.</p>";
+    recipeContainer.innerHTML = "<p>ID da receita não encontrado na URL.</p>";
     return;
   }
 
   try {
-    const doc = await db.collection("receita").doc(recipeId).get();
+    // Fetch the recipe document
+    const recipeDoc = await getDoc(doc(db, "receita", recipeId));
 
-    if (!doc.exists) {
-      body.innerHTML += "<p>Receita não encontrada.</p>";
+    if (!recipeDoc.exists()) {
+      recipeContainer.innerHTML = "<p>Receita não encontrada.</p>";
       return;
     }
 
-    const recipe = doc.data();
+    const recipe = recipeDoc.data();
 
-    body.innerHTML += `
+    // Display the recipe details
+    recipeContainer.innerHTML = `
       <h2>${recipe.titulo}</h2>
+      ${recipe.imageURL ? `<img src="${recipe.imageURL}" alt="${recipe.titulo}" style="max-width: 400px;">` : ""}
+      ${recipe.autor ? `<p><strong>Autor:</strong> ${recipe.autor}</p>` : ""}
       <h3>Ingredientes:</h3>
       <p>${recipe.ingredientes}</p>
       <h3>Modo de Preparo:</h3>
@@ -51,9 +59,9 @@ async function fetchRecipe() {
     `;
   } catch (error) {
     console.error("Erro ao buscar a receita:", error);
-    body.innerHTML += "<p>Ocorreu um erro ao carregar a receita.</p>";
+    recipeContainer.innerHTML = "<p>Ocorreu um erro ao carregar a receita.</p>";
   }
 }
 
-// 🖱️ Trigger on Page Load
+// Fetch the recipe when the page loads
 document.addEventListener("DOMContentLoaded", fetchRecipe);

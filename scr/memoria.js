@@ -1,3 +1,7 @@
+// Import Firebase v9 modules
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
 // Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyBg2BsiQ5uB8ULAgl9mvU0ilTJzT-oYFc0",
@@ -9,20 +13,20 @@ const firebaseConfig = {
   measurementId: "G-JXMBFD0YMC"
 };
 
-// ✅ Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-// 🔗 DOM Element
+// Get the DOM element where the memory details will be displayed
 const memoriaDiv = document.getElementById("memoria");
 
-// 🔍 Get Memory ID from URL
+// Retrieve the memory ID from the URL query parameters (e.g., ?id=abc123)
 function getMemoryIdFromURL() {
   const params = new URLSearchParams(window.location.search);
-  return params.get("id"); // e.g., ?id=abc123
+  return params.get("id");
 }
 
-// 🚀 Fetch and Display Memory by ID
+// Fetch and display the memory document by its ID
 async function fetchMemory() {
   const memoryId = getMemoryIdFromURL();
 
@@ -32,18 +36,21 @@ async function fetchMemory() {
   }
 
   try {
-    const doc = await db.collection("memoria").doc(memoryId).get();
+    const memoryDoc = await getDoc(doc(db, "memoria", memoryId));
 
-    if (!doc.exists) {
+    if (!memoryDoc.exists()) {
       memoriaDiv.innerHTML = "<p>Memória não encontrada.</p>";
       return;
     }
 
-    const memory = doc.data();
+    const memory = memoryDoc.data();
 
+    // Build the HTML to display the memory details, including author and image if available
     memoriaDiv.innerHTML = `
       <h2>${memory.titulo}</h2>
-      <p>${memory.texto}</p>
+      ${memory.autor ? `<p><strong>Autor:</strong> ${memory.autor}</p>` : ""}
+      ${memory.imageURL ? `<img src="${memory.imageURL}" alt="${memory.titulo}" style="max-width: 400px;">` : ""}
+      <p>${memory.texto ? memory.texto : ""}</p>
     `;
   } catch (error) {
     console.error("Erro ao buscar a memória:", error);
@@ -51,5 +58,5 @@ async function fetchMemory() {
   }
 }
 
-// 🖱️ Trigger on Page Load
+// Trigger fetching of the memory when the page loads
 document.addEventListener("DOMContentLoaded", fetchMemory);
