@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dona Dalva Editar Receitas</title>
+    <meta title="author" name="Felipe Garcia Affonso">
+    <link rel="stylesheet" href="../style/index.css">
+    <link rel="stylesheet" href="../style/addReceita.css"> <!-- Optional page-specific styles -->
+  </head>
+  <body>
+    <header>
+      <h1>Dona Dalva</h1>
+      <nav>
+        <a href="../index.html">Página Inicial</a>
+        <a href="receitas.html">Receitas</a>
+        <a href="memorias.html">Memórias</a>
+      </nav>
+    </header>
+
+    <main id="main-container">
+      <div id="receita-form-container">
+        <h1>Editar Receita</h1>
+        <a href="receitas.html" class="voltar-button">Voltar</a>
+        <label for="title">Título da Receita:</label>
+        <input type="text" id="title" placeholder="Título da receita" required>
+
+        <label for="author">Autor:</label>
+        <input type="text" id="author" placeholder="Nome do autor" required>
+
+        <label for="ingridents">Ingredientes:</label>
+        <textarea id="ingridents" placeholder="Ingredientes" required></textarea>
+
+        <label for="howto">Como Fazer:</label>
+        <textarea id="howto" placeholder="Como fazer a receita" required></textarea>
+
+        <label for="historia-relacionada">História Relacionada (opcional):</label>
+        <textarea id="historia-relacionada" placeholder="História relacionada à receita"></textarea>
+
+        <label for="image">Imagem (opcional):</label>
+        <input type="file" id="image" accept="image/*">
+
+        <img id="recipe-image-preview" alt="Imagem da receita" src="">
+
+        <button type="submit" id="submit">Postar</button>
+      </div>
+    </main>
+
+    <footer>
+      <p>Em caso de erros ou dúvidas, contate: felipegarciaaffonso@gmail.com</p>
+      <p>© 2025 Dona Dalva Memórias</p>
+    </footer>
+
+    <script src="../scr/editReceita.js" type="module"></script>
+  </body>
+</html>
