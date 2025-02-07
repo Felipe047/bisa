@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dona Dalva Editar Memória</title>
+    <meta title="author" name="Felipe Garcia Affonso">
+    <link rel="stylesheet" href="../style/index.css">
+    <link rel="stylesheet" href="../style/addMemoria.css">
+
+</head>
+
+<body>
+    <header>
+        <h1>Dona Dalva</h1>
+        <nav>
+            <a href="../index.html">Página Inicial</a>
+            <a href="receitas.html">Receitas</a>
+            <a href="memorias.html">Memórias</a>
+        </nav>
+    </header>
+
+    <main id="main-container">  <!-- ✅ Added this container -->
+        <div id="memory-form-container">
+            <h1>Editar Memória</h1>
+            <a href="receitas.html" class="voltar-button">Voltar</a>
+
+            <label for="title">Título da Memória:</label>
+            <input type="text" id="title" placeholder="Título da memória">
+
+            <label for="author">Autor:</label>
+            <input type="text" id="author" placeholder="Nome do autor">
+
+            <label for="text">História:</label>
+            <textarea id="text" placeholder="Conte sua história..."></textarea>
+
+            <label for="image">Imagem (opcional):</label>
+            <input type="file" id="image" accept="image/*">
+
+            <img id="memory-image-preview" alt="Imagem da memória" src="">
+
+            <button type="submit" id="submit">Postar</button>
+        </div>
+    </main>
+
+    <footer>
+        <p>Em caso de erros ou dúvidas, contate: felipegarciaaffonso@gmail.com</p>
+        <p>© 2025 Dona Dalva Memórias</p>
+    </footer>
+
+    <script src="../scr/editMemoria.js" type="module"></script>
+</body>

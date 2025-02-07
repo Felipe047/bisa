@@ -26,6 +26,15 @@ function getMemoryIdFromURL() {
   return params.get("id");
 }
 
+// go to different page
+function goToEdit() {
+  window.location.href = "../pages/editMemoria.html?id=" + getMemoryIdFromURL();
+}
+
+const editButton = document.getElementById("edit-button");
+
+editButton.addEventListener("click", goToEdit);
+
 // Fetch and display the memory document by its ID
 async function fetchMemory() {
   const memoryId = getMemoryIdFromURL();
@@ -45,12 +54,14 @@ async function fetchMemory() {
 
     const memory = memoryDoc.data();
 
+    console.log()
+
     // Build the HTML to display the memory details, including author and image if available
     memoriaDiv.innerHTML = `
       <h2>${memory.titulo}</h2>
       ${memory.autor ? `<p><strong>Autor:</strong> ${memory.autor}</p>` : ""}
       ${memory.imageURL ? `<img src="${memory.imageURL}" alt="${memory.titulo}" style="max-width: 400px;">` : ""}
-      <p>${memory.texto ? memory.texto : ""}</p>
+      <p>${memory.texto ? memory.texto.replace(/\n/g, "<br>") : ""}</p>
     `;
   } catch (error) {
     console.error("Erro ao buscar a memória:", error);

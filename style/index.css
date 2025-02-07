@@ -14,6 +14,11 @@ body {
     min-height: 100vh;
 }
 
+img {
+    display: block;
+    margin: 0 auto;
+  }
+
 /* Header styles */
 header {
     background-color: #CB8B82;

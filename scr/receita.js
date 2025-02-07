@@ -61,10 +61,10 @@ async function fetchRecipe() {
       ${recipe.imageURL ? `<img src="${recipe.imageURL}" alt="${recipe.titulo}" style="max-width: 400px;">` : ""}
       ${recipe.autor ? `<p><strong>Autor:</strong> ${recipe.autor}</p>` : ""}
       <h3>Ingredientes:</h3>
-      <p>${recipe.ingredientes}</p>
+      <p>${recipe.ingredientes.replace(/\n/g, "<br>")}</p>
       <h3>Modo de Preparo:</h3>
-      <p>${recipe.howto}</p>
-      ${recipe.context ? `<h3>História Relacionada:</h3><p>${recipe.context}</p>` : ""}
+      <p>${recipe.howto.replace(/\n/g, "<br>")}</p>
+      ${recipe.context ? `<h3>História Relacionada:</h3><p>${recipe.context.replace(/\n/g, "<br>")}</p>` : ""}
     `;
   } catch (error) {
     console.error("Erro ao buscar a receita:", error);
