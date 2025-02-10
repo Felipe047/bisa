@@ -43,6 +43,11 @@ async function addRecipe() {
     return;
   }
 
+  // Show loading spinner
+  postButton.innerText = "Adicionando...";
+  // Disable the button to prevent multiple clicks
+  postButton.disabled = true;
+
   try {
     let imageURL = "";
 
@@ -66,13 +71,9 @@ async function addRecipe() {
 
     alert("Receita adicionada com sucesso!");
 
-    // Clear inputs
-    titleInput.value = "";
-    authorInput.value = "";
-    ingredientesInput.value = "";
-    howToInput.value = "";
-    contextInput.value = "";
-    imageInput.value = "";
+    // send user back to receita page
+    location.href = "./receitas.html";
+  
   } catch (error) {
     console.error("Erro ao adicionar receita:", error);
     alert("Ocorreu um erro ao adicionar a receita.");

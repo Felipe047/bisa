@@ -47,6 +47,8 @@ async function fetchMemory() {
   try {
     const memoryDoc = await getDoc(doc(db, "memoria", memoryId));
 
+    memoriaDiv.innerHTML = "";
+
     if (!memoryDoc.exists()) {
       memoriaDiv.innerHTML = "<p>Memória não encontrada.</p>";
       return;

@@ -38,6 +38,11 @@ async function addMemory() {
     return;
   }
 
+  // show loading spinner
+  postButton.innerText = "Adicionando...";
+  // Disable the button to prevent multiple clicks
+  postButton.disabled = true;
+
   try {
     let imageURL = "";
 
@@ -62,12 +67,9 @@ async function addMemory() {
     });
 
     alert("Memória adicionada com sucesso!");
+    // send user back to receita page
+    location.href = "./memorias.html";
 
-    // 🔄 Clear inputs
-    titleInput.value = "";
-    authorInput.value = "";
-    textInput.value = "";
-    imageInput.value = ""; 
   } catch (error) {
     console.error("Erro ao adicionar memória:", error);
     alert("Ocorreu um erro ao adicionar a memória.");

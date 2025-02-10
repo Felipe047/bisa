@@ -48,6 +48,8 @@ async function fetchRecipe() {
     // Fetch the recipe document
     const recipeDoc = await getDoc(doc(db, "receita", recipeId));
 
+    recipeContainer.innerHTML = "";
+
     if (!recipeDoc.exists()) {
       recipeContainer.innerHTML = "<p>Receita não encontrada.</p>";
       return;

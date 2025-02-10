@@ -25,6 +25,9 @@ async function fetchMemories() {
   try {
     const querySnapshot = await getDocs(collection(db, "memoria"));
 
+    // remove loading spinner
+    memoriesDiv.innerHTML = "";
+
     querySnapshot.forEach((doc) => {
       const memory = doc.data();
       const memoryDiv = document.createElement("div");

@@ -81,6 +81,10 @@ async function updateMemory() {
     return;
   }
 
+  // Show loading spinner
+  postButton.innerText = "Atualizando...";
+  postButton.disabled = true; // Disable the button to prevent multiple clicks
+
   try {
     let imageURL = memoryImagePreview.src || ""; // Keep existing image if no new one is uploaded
 

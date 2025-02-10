@@ -24,6 +24,8 @@ const receitasDiv = document.getElementById("receitas");
 async function fetchReceitas() {
   try {
     const querySnapshot = await getDocs(collection(db, "receita"));
+    // Clear the recipes container
+    receitasDiv.innerHTML = "";
 
     // Loop through each document in the "receita" collection
     querySnapshot.forEach((doc) => {

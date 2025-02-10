@@ -102,6 +102,13 @@ textarea {
     border: 1px solid #2781AA;
 }
 
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
 @media (max-width: 600px) {
     #receita-form-container {
         padding: 15px 20px;

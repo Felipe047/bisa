@@ -87,6 +87,10 @@ async function updateRecipe() {
     return;
   }
 
+  // Show loading spinner
+  postButton.innerText = "Atualizando...";
+  postButton.disabled = true; // Disable the button to prevent multiple clicks
+
   try {
     let imageURL = recipeImagePreview.src || ""; // Keep existing image if no new one is uploaded
 
