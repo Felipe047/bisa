@@ -89,7 +89,7 @@ async function updateMemory() {
     let imageURL = memoryImagePreview.src || ""; // Keep existing image if no new one is uploaded
 
     // Upload new image if provided
-    if (imageFile) {
+    if (imageFile && imageFile.size > 0) {
       const storageRef = ref(storage, `memorias/${Date.now()}_${imageFile.name}`);
       const snapshot = await uploadBytes(storageRef, imageFile);
       imageURL = await getDownloadURL(snapshot.ref);

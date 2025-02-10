@@ -28,6 +28,11 @@ async function fetchMemories() {
     // remove loading spinner
     memoriesDiv.innerHTML = "";
 
+    function hasImage(memory) {
+      console.log(memory.imageURL);
+      return memory.imageURL && memory.imageURL.length > 1;
+    }
+
     querySnapshot.forEach((doc) => {
       const memory = doc.data();
       const memoryDiv = document.createElement("div");
@@ -37,7 +42,7 @@ async function fetchMemories() {
         <a class="memory-container" href="memoria.html?id=${doc.id}">
           <h2 class="memory-title">${memory.titulo}</h2>
           ${memory.autor ? `<p class="memory-author">${memory.autor}</p>` : ""}
-          ${memory.imageURL ? `<img class="memory-image" src="${memory.imageURL}" alt="${memory.titulo}">` : ""}
+          ${hasImage(memory) ? `<img class="memory-image" src="${memory.imageURL}" alt="${memory.titulo}">` : ""}
           <p class="memory-text">${memory.texto ? memory.texto.substring(0, 150) + "..." : ""}</p>
           <p class="memory-link">Read More</p>
         </a>

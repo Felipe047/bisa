@@ -27,6 +27,10 @@ async function fetchReceitas() {
     // Clear the recipes container
     receitasDiv.innerHTML = "";
 
+    function hasImage(receita) {
+      return receita.imageURL && receita.imageURL.length > 0;
+    }
+
     // Loop through each document in the "receita" collection
     querySnapshot.forEach((doc) => {
       const receita = doc.data();
@@ -37,7 +41,7 @@ async function fetchReceitas() {
         <a class="receita-container" href="receita.html?id=${doc.id}">
           <h2 class="receita-title">${receita.titulo}</h2>
           ${receita.autor ? `<p class="receita-author">${receita.autor}</p>` : ""}
-          ${receita.imageURL ? `<img class="receita-image" src="${receita.imageURL}" alt="${receita.titulo}">` : ""}
+          ${hasImage(receita) ? `<img class="receita-image" src="${receita.imageURL}" alt="${receita.titulo}">` : ""}
           <p class="receita-text">${receita.descricao ? receita.descricao.substring(0, 150) + "..." : ""}</p>
           <p class="receita-link">Ver Receita Completa</p>
         </a>
