@@ -17,9 +17,21 @@
     </header>
     
     <main id="main-container">
+      <br>
       <button id="edit-button">Editar</button>
       <a href="memorias.html" class="voltar-button">Voltar</a>
       <div id="memoria"><p id="loading">Carregando...</p></div>
+      <h2>Comentários</h2>
+      <div id="comment-container">
+        <div id="comments"><p id="loading">Carregando...</p></div>
+        <div id="comment-form">
+          <label for="name">Nome:</label>
+          <input id="name" name="name" required>
+          <label for="comment">Comentário:</label>
+          <textarea id="comment" name="comment" required></textarea>
+          <button type="submit">Enviar</button>
+        </div>
+      </div>
     </main>
     
     <footer>

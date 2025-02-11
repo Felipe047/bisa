@@ -1,13 +1,23 @@
 // Import Firebase v9 modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-import { getFirestore, collection, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  collection,
+  addDoc,
+  query,
+  orderBy,
+  onSnapshot,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
 // Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyBg2BsiQ5uB8ULAgl9mvU0ilTJzT-oYFc0",
   authDomain: "bisa-8d6fb.firebaseapp.com",
   projectId: "bisa-8d6fb",
-  storageBucket: "bisa-8d6fb.appspot.com", // Corrected storage bucket ID
+  storageBucket: "bisa-8d6fb.appspot.com",
   messagingSenderId: "667766718405",
   appId: "1:667766718405:web:919e201256be887a3b55ac",
   measurementId: "G-JXMBFD0YMC"
@@ -17,26 +27,15 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// Use a dedicated container for the recipe details
-const recipeContainer = document.getElementById("receita");
-
-// Get Recipe ID from URL (e.g., receita.html?id=abc123)
+// Get Recipe ID from URL
 function getRecipeIdFromURL() {
   const params = new URLSearchParams(window.location.search);
   return params.get("id");
 }
 
-// go to different page
-function goToEdit() {
-  window.location.href = "../pages/editReceita.html?id=" + getRecipeIdFromURL();
-}
-
-const editButton = document.getElementById("edit-button");
-
-editButton.addEventListener("click", goToEdit);
-
 // Fetch and display the recipe
 async function fetchRecipe() {
+  const recipeContainer = document.getElementById("receita");
   const recipeId = getRecipeIdFromURL();
 
   if (!recipeId) {
@@ -45,10 +44,7 @@ async function fetchRecipe() {
   }
 
   try {
-    // Fetch the recipe document
     const recipeDoc = await getDoc(doc(db, "receita", recipeId));
-
-    recipeContainer.innerHTML = "";
 
     if (!recipeDoc.exists()) {
       recipeContainer.innerHTML = "<p>Receita não encontrada.</p>";
@@ -56,8 +52,6 @@ async function fetchRecipe() {
     }
 
     const recipe = recipeDoc.data();
-
-    // Display the recipe details
     recipeContainer.innerHTML = `
       <h2>${recipe.titulo}</h2>
       ${recipe.imageURL ? `<img src="${recipe.imageURL}" alt="${recipe.titulo}" style="max-width: 400px;">` : ""}
@@ -74,5 +68,67 @@ async function fetchRecipe() {
   }
 }
 
-// Fetch the recipe when the page loads
-document.addEventListener("DOMContentLoaded", fetchRecipe);
+// Add comment function
+async function addComment(event) {
+  event.preventDefault();
+
+  const recipeId = getRecipeIdFromURL();
+  const name = document.getElementById("name").value.trim();
+  const comment = document.getElementById("comment").value.trim();
+
+  if (!name || !comment) {
+    alert("Por favor, preencha o nome e o comentário.");
+    return;
+  }
+
+  try {
+    await addDoc(collection(db, "receita", recipeId, "comments"), {
+      name,
+      comment,
+      timestamp: serverTimestamp()
+    });
+
+    document.getElementById("name").value = "";
+    document.getElementById("comment").value = "";
+  } catch (error) {
+    console.error("Erro ao enviar comentário:", error);
+    alert("Erro ao enviar o comentário.");
+  }
+}
+
+// Load comments
+function loadComments() {
+  const recipeId = getRecipeIdFromURL();
+  const commentsDiv = document.getElementById("comments");
+  commentsDiv.innerHTML = "<p>Carregando comentários...</p>";
+
+  const commentsRef = collection(db, "receita", recipeId, "comments");
+  const q = query(commentsRef, orderBy("timestamp", "desc"));
+
+  onSnapshot(q, (snapshot) => {
+    commentsDiv.innerHTML = "";
+
+    if (snapshot.empty) {
+      commentsDiv.innerHTML = "<p>Sem comentários ainda.</p>";
+      return;
+    }
+
+    snapshot.forEach((doc) => {
+      const comment = doc.data();
+      commentsDiv.innerHTML += `
+        <div class="comment-card">
+          <p><strong>${comment.name}:</strong> ${comment.comment}</p>
+          <small>${comment.timestamp?.toDate().toLocaleString() || "Agora"}</small>
+        </div>
+      `;
+    });
+  });
+}
+
+// Event listeners
+document.addEventListener("DOMContentLoaded", () => {
+  fetchRecipe();
+  loadComments();
+});
+
+document.querySelector("#comment-form button").addEventListener("click", addComment);

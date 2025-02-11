@@ -1,6 +1,16 @@
 // Import Firebase v9 modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  collection,
+  addDoc,
+  query,
+  orderBy,
+  onSnapshot,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
 // Firebase config
 const firebaseConfig = {
@@ -17,26 +27,15 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// Get the DOM element where the memory details will be displayed
-const memoriaDiv = document.getElementById("memoria");
-
-// Retrieve the memory ID from the URL query parameters (e.g., ?id=abc123)
+// Get memory ID from URL
 function getMemoryIdFromURL() {
   const params = new URLSearchParams(window.location.search);
   return params.get("id");
 }
 
-// go to different page
-function goToEdit() {
-  window.location.href = "../pages/editMemoria.html?id=" + getMemoryIdFromURL();
-}
-
-const editButton = document.getElementById("edit-button");
-
-editButton.addEventListener("click", goToEdit);
-
-// Fetch and display the memory document by its ID
+// Fetch and display memory
 async function fetchMemory() {
+  const memoriaDiv = document.getElementById("memoria");
   const memoryId = getMemoryIdFromURL();
 
   if (!memoryId) {
@@ -47,18 +46,12 @@ async function fetchMemory() {
   try {
     const memoryDoc = await getDoc(doc(db, "memoria", memoryId));
 
-    memoriaDiv.innerHTML = "";
-
     if (!memoryDoc.exists()) {
       memoriaDiv.innerHTML = "<p>Memória não encontrada.</p>";
       return;
     }
 
     const memory = memoryDoc.data();
-
-    console.log()
-
-    // Build the HTML to display the memory details, including author and image if available
     memoriaDiv.innerHTML = `
       <h2>${memory.titulo}</h2>
       ${memory.autor ? `<p><strong>Autor:</strong> ${memory.autor}</p>` : ""}
@@ -71,5 +64,67 @@ async function fetchMemory() {
   }
 }
 
-// Trigger fetching of the memory when the page loads
-document.addEventListener("DOMContentLoaded", fetchMemory);
+// Add comment function
+async function addComment(event) {
+  event.preventDefault();
+
+  const memoryId = getMemoryIdFromURL();
+  const name = document.getElementById("name").value.trim();
+  const comment = document.getElementById("comment").value.trim();
+
+  if (!name || !comment) {
+    alert("Por favor, preencha o nome e o comentário.");
+    return;
+  }
+
+  try {
+    await addDoc(collection(db, "memoria", memoryId, "comments"), {
+      name,
+      comment,
+      timestamp: serverTimestamp()
+    });
+
+    document.getElementById("name").value = "";
+    document.getElementById("comment").value = "";
+  } catch (error) {
+    console.error("Erro ao enviar comentário:", error);
+    alert("Erro ao enviar o comentário.");
+  }
+}
+
+// Load comments
+function loadComments() {
+  const memoryId = getMemoryIdFromURL();
+  const commentsDiv = document.getElementById("comments");
+  commentsDiv.innerHTML = "<p>Carregando comentários...</p>";
+
+  const commentsRef = collection(db, "memoria", memoryId, "comments");
+  const q = query(commentsRef, orderBy("timestamp", "desc"));
+
+  onSnapshot(q, (snapshot) => {
+    commentsDiv.innerHTML = "";
+
+    if (snapshot.empty) {
+      commentsDiv.innerHTML = "<p>Sem comentários ainda.</p>";
+      return;
+    }
+
+    snapshot.forEach((doc) => {
+      const comment = doc.data();
+      commentsDiv.innerHTML += `
+        <div class="comment-card">
+          <p><strong>${comment.name}:</strong> ${comment.comment}</p>
+          <small>${comment.timestamp?.toDate().toLocaleString() || "Agora"}</small>
+        </div>
+      `;
+    });
+  });
+}
+
+// Event listeners
+document.addEventListener("DOMContentLoaded", () => {
+  fetchMemory();
+  loadComments();
+});
+
+document.querySelector("#comment-form button").addEventListener("click", addComment);
