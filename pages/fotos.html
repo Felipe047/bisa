@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8">
+    <title>Dona Dalva Fotos</title>
+    <meta name="author" content="Felipe Garcia Affonso">
+    <link rel="stylesheet" href="../style/index.css">
+    <link rel="stylesheet" href="../style/fotos.css">
+  </head>
+  <body>
+    <header>
+      <h1>Dona Dalva</h1>
+      <nav>
+        <a href="../index.html">Página Inicial</a>
+        <a href="receitas.html">Receitas</a>
+        <a href="memorias.html">Memórias</a>
+        <a href="fotos.html">Fotos</a>
+      </nav>
+    </header>
+
+    <main id="main-container">
+      <h1>Fotos</h1>
+
+      <!-- Photo Upload Form -->
+      <form id="photo-form">
+        <label for="photoInput">Adicione uma foto:</label>
+        <input type="file" id="photoInput" accept="image/*" required>
+        <button type="submit">Enviar Foto</button>
+      </form>
+
+      <div id="fotos">
+        <p id="loading">Carregando...</p>
+      </div>
+    </main>
+
+    <footer>
+      <p>Em caso de erros ou dúvidas, contate: felipegarciaaffonso@gmail.com</p>
+      <p>© 2025 Dona Dalva Memórias</p>
+    </footer>
+
+    <script src="../scr/fotos.js" type="module" defer></script>
+  </body>
+</html>
