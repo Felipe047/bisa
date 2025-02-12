@@ -24,21 +24,28 @@ const receitasDiv = document.getElementById("receitas");
 async function fetchReceitas() {
   try {
     const querySnapshot = await getDocs(collection(db, "receita"));
-    // Clear the recipes container
     receitasDiv.innerHTML = "";
 
     function hasImage(receita) {
       return receita.imageURL && receita.imageURL.length > 0;
     }
 
-    // Loop through each document in the "receita" collection
-    querySnapshot.forEach((doc) => {
-      const receita = doc.data();
+    // Convert Firestore documents to an array
+    const receitas = querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    // Sort recipes alphabetically by title (or modify for other sorting logic)
+    receitas.sort((a, b) => a.titulo.localeCompare(b.titulo));
+
+    // Display sorted recipes
+    receitas.forEach(receita => {
       const receitaDiv = document.createElement("div");
       receitaDiv.classList.add("receita-card");
 
       receitaDiv.innerHTML = `
-        <a class="receita-container" href="receita.html?id=${doc.id}">
+        <a class="receita-container" href="receita.html?id=${receita.id}">
           <h2 class="receita-title">${receita.titulo}</h2>
           ${receita.autor ? `<p class="receita-author">${receita.autor}</p>` : ""}
           ${hasImage(receita) ? `<img class="receita-image" src="${receita.imageURL}" alt="${receita.titulo}">` : ""}
