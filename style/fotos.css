@@ -20,10 +20,6 @@
     }
   }
   
-  /* Hover effect for a nice interaction */
-  #fotos img:hover {
-    transform: scale(1.05);
-  }
   
 /* make the photo form look like the other forms */
 
