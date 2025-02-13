@@ -27,11 +27,21 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// Get Recipe ID from URL
+// Get Recipe ID from URL (e.g., receita.html?id=abc123)
 function getRecipeIdFromURL() {
   const params = new URLSearchParams(window.location.search);
   return params.get("id");
 }
+
+// go to different page
+function goToEdit() {
+  window.location.href = "../pages/editReceita.html?id=" + getRecipeIdFromURL();
+}
+
+const editButton = document.getElementById("edit-button");
+
+editButton.addEventListener("click", goToEdit);
+
 
 // Fetch and display the recipe
 async function fetchRecipe() {

@@ -20,6 +20,21 @@ const db = getFirestore(app);
 // Get the container element for memories
 const memoriesDiv = document.getElementById("memorias");
 
+// Retrieve the memory ID from the URL query parameters (e.g., ?id=abc123)
+function getMemoryIdFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get("id");
+}
+
+// go to different page
+function goToEdit() {
+  window.location.href = "../pages/editMemoria.html?id=" + getMemoryIdFromURL();
+}
+
+const editButton = document.getElementById("edit-button");
+
+editButton.addEventListener("click", goToEdit);
+
 // Fetch and display all memory documents from the "memoria" collection
 async function fetchMemories() {
   try {
