@@ -26,15 +26,6 @@ function getMemoryIdFromURL() {
   return params.get("id");
 }
 
-// go to different page
-function goToEdit() {
-  window.location.href = "../pages/editMemoria.html?id=" + getMemoryIdFromURL();
-}
-
-const editButton = document.getElementById("edit-button");
-
-editButton.addEventListener("click", goToEdit);
-
 // Fetch and display all memory documents from the "memoria" collection
 async function fetchMemories() {
   try {
